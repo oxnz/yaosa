@@ -1,0 +1,90 @@
+usr/include
+	|
+	|
+	|------limits.h
+	|
+	|------errno.h
+	|
+	|------a.out.h
+	|
+	|------fcntl.h
+	|
+	|------signal.h
+	|
+	|------ansi.h
+	|
+	|------stdlib.h
+	|
+	|------unistd.h
+	|
+	|------string.h
+	|
+	|--------can't be in category
+	|
+	|--------sys/
+	|		|
+	|		|------types.h
+	|		|
+	|		|------ioctl.h
+	|		|
+	|		|------sigcontext.h
+	|		|
+	|		|------stat.h
+	|		|
+	|		|------dir.h
+	|		|
+	|		|------wait.h
+	|
+	|
+	|
+	|
+	|--------yaosa/
+	|		|
+	|		|-----keymap.h
+	|		|
+	|		|-----config.h
+	|		|
+	|		|-----parition.h
+	|		|
+	|		|-----const.h
+	|		|
+	|		|-----type.h
+	|		|
+	|		|-----boot.h
+	|		|
+	|		|-----com.h
+	|		|
+	|		|-----callnr.h
+	|		|
+	|		|-----syslib.h
+	|		|
+	|		|-----callnr.h
+	|		|
+	|		|-----callnr.h
+	|		|
+	|		|-----callnr.h
+	|		|
+	|		|-----callnr.h
+	|		|
+	|		|-----callnr.h
+	|		|
+	|--------ibm
+================================================
+/usr/src
+	|
+	|--------kernel/
+	|
+	|--------mm/
+	|
+	|--------fs/
+	|
+	|--------lib/
+	|
+	|--------init
+	|
+	|--------tools
+	|
+	|--------inet/
+	|
+	|--------test/
+

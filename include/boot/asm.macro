@@ -1,0 +1,107 @@
+#ifndef __ASM_MACRO_H__
+#define __ASM_MACRO_H__
+
+/*>>>>>	TYPE	********************************
+ *	DATA
+ *	P|DPL|S|X|E|R/W|A
+ *	1|00 |1|0|0|0  |0	0x90	NULL
+ *	1|00 |1|0|0|0  |1	0x91	RA
+ *	1|00 |1|0|0|1  |0	0x92	RW
+ *	1|00 |1|0|0|1  |1	0x93	RWA
+ *	1|00 |1|0|1|0  |0	0x94	ER
+ *	1|00 |1|0|1|0  |1	0x95	ERA
+ *	1|00 |1|0|1|1  |0	0x96	ERW
+ *	1|00 |1|0|1|1  |1	0x97	ERWA
+ *	CODE
+ *	1|00 |1|1|0|0  |0	0x98	X
+ *	1|00 |1|1|0|0  |1	0x99	XA
+ *	1|00 |1|1|0|1  |0	0x9A	XR
+ *	1|00 |1|1|0|1  |1	0x9B	XRA
+ *	1|00 |1|1|1|0  |0	0x9C	XE
+ *	1|00 |1|1|1|0  |1	0x9D	XEA
+ *	1|00 |1|1|1|1  |0	0x9E	XER
+ *	1|00 |1|1|1|1  |1	0x9F	XERA
+ *	P|DPL|S|X|E|R/W|A
+ ***********************************************/
+.equ	MDATA_R,	0x90
+.equ	MDATA_RA,	0x91
+.equ	MDATA_RW,	0x92
+.equ	MDATA_RWA,	0x93
+.equ	MDATA_ER,	0x94
+.equ	MDATA_ERA,	0x95
+.equ	MDATA_ERW,	0x96
+.equ	MDATA_ERWA,	0x97
+
+.equ	MCODE_X,	0x98
+.equ	MCODE_XA,	0x99
+.equ	MCODE_XR,	0x9A
+.equ	MCODE_XRA,	0x9B
+.equ	MCODE_XE,	0x9C
+.equ	MCODE_XEA,	0x9D
+.equ	MCODE_XER,	0x9E
+.equ	MCODE_XERA,	0x9F
+
+.equ	M32,	0x4000
+
+.equ	MDPL0,	0x00
+.equ	MDPL1,	0x20
+.equ	MDPL2,	0x40
+.equ	MDPL3,	0x60
+
+/*
+.macro M_DESC	base, limit, type
+	.word	(\limit & 0xFFFF)
+	.word	(\base & 0xFFFF)
+	.byte	(\base >> 16) & 0xFF
+	.byte	(\type & 0xFF)
+	.byte	(((\limit >> 16) & 0x0F) | 0xC0)
+	.byte	(\base >> 24)
+.endm
+*/
+
+CR:
+	pushl	%eax
+	pushl	%ebx
+
+	movl	%edi,	%eax
+	movb	$0xA0,	%bl
+	div	%bl
+	andl	$0x00FF,%eax
+	incl	%eax
+	movb	$0xA0,	%bl
+	mul	%bl
+	movl	%eax,	%edi
+
+	popl	%ebx
+	popl	%eax
+
+	ret
+
+DispAL:
+	pushl	%ecx
+	pushl	%edx
+
+	movb	$0x0C,	%ah
+	movb	%al,	%dl
+	shrb	$0x04,	%al
+	movl	$0x02,	%ecx
+0:
+	andb	$0x0F,	%al
+	cmpb	$0x09,	%al
+	ja	1f
+	addb	$0x30,	%al
+	jmp	2f
+1:
+	subb	$0x0A,	%al
+	addb	$0x41,	%al
+2:
+	movw	%ax,	%gs:(%edi)
+	addl	$0x02,	%edi
+	movb	%dl,	%al
+	loop	0b
+	addl	$0x02,	%edi
+	popl	%edx
+	popl	%ecx
+
+	ret
+#endif//__ASM_MACRO_H__

@@ -1,0 +1,13 @@
+.macro	putch
+	pushw	%bx
+	xorb	%bh,	%bh
+	movb	$0x0C,	%bl
+	movb	$0x0E,	%ah
+	int	$0x10
+	popw	%bx
+.endm
+
+.macro	puts
+	putch
+	lodsb
+.endm
